@@ -16,7 +16,7 @@ h2 {
 }
 h4 {
   font-size: 1rem;
-  width: 30rem;
+  width: 33rem;
   height: 4rem;
 }
 .item {
@@ -25,8 +25,8 @@ h4 {
   background-color: rgb(2, 22, 58);
   color: antiquewhite;
   border-radius: 0.5rem;
-  padding: 1.4rem;
-  margin: 0.5rem;
+  padding: 1.2rem;
+  margin: 1.2rem;
   width:fit-content;
 }
 
