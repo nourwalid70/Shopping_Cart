@@ -13,14 +13,85 @@ import {Navbar, Container, Nav} from 'react-bootstrap';
 function App() {
     
   const [products, setproducts] = useState([]);
+  const [items, setItems] = useState([])
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products?limit=70', {
+    fetch('https://fakestoreapi.com/products?limit=10', {
       method: 'GET'
     }).then(response => response.json()).then(data => {
       setproducts(data)
-      console.log(products)
     })
-  });
+    const getItems = async () => {
+      const itemsFromServer = await fetchItems()
+      setItems(itemsFromServer)
+    }
+
+    getItems()
+  },[]);
+
+  const addToCart = async (product) => {
+    const exist = items.find((x) => x.id === product.id);
+    let count=1;
+    if (exist) {
+      setItems(
+        items.map((x) =>
+          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+        )
+      );
+      count=exist.qty+1;
+    } else {
+      setItems([...items, { ...product, qty: 1 }]);
+    }
+    console.log(product);
+    await fetch('http://localhost:5000/items', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ ...product, qty:count}),
+    })
+    console.log(items);
+
+  };
+
+  const removeFromCart = async (product) => {
+    console.log(product.id);
+    console.log(product);
+    const res = await fetch(`http://localhost:5000/items/${product.id}`, {
+      method: 'DELETE',
+    })
+    const exist = items.find((x) => x.id === product.id);
+    if (exist.qty === 1) {
+      res.status === 200
+        ? setItems(items.filter((x) => x.id !== product.id))
+        : alert('Error Deleting This Task')
+    } else {
+
+      res.status === 200
+        ? setItems(
+          items.map((x) => x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x) )
+        : alert('Error Deleting This Task')
+
+        await fetch('http://localhost:5000/items', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(product),
+        })
+    }
+  };
+
+  const deleteAll = (Product) => {
+      Product.qty = 1;
+    removeFromCart(Product);
+  }
+
+  const fetchItems = async () => {
+    const res = await fetch('http://localhost:5000/items')
+    const data = await res.json()
+
+    return data
+  }
   return (
      <BrowserRouter>
       <Navbar className="bar" fixed="top" expand="lg" variant="light">
@@ -34,9 +105,10 @@ function App() {
         </Container>
       </Navbar>
         <Switch>
-          <Route path="/" exact render={() => <Home products={products}/>}></Route>
+        <Route path="/" exact render={() => <Home products={products} addToCart={addToCart}/>}></Route>
           <Route path="/about" exact component={About}></Route>
-          <Route path="/cart" exact component={Cart}></Route>
+        <Route path="/cart" exact render={() => <Cart items={items} addToCart={addToCart}
+          removeFromCart={removeFromCart} deleteAll={deleteAll}/>}></Route>
         </Switch>
        </BrowserRouter>
  

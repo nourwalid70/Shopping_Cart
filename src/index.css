@@ -1,5 +1,8 @@
 body {
   font-family: 'Helvetica';
+   background-image: url("nanlogo.jpeg");
+  background-color: #cccccc;
+  
 }
 
 h1,h2,h4{
@@ -20,7 +23,7 @@ h4 {
 .item {
   display: inline-block;
   justify-content: space-between;
-  background-color: rgb(2, 22, 58);
+  background-color: rgba(69, 69, 70, 0.819);
   color: antiquewhite;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -42,6 +45,7 @@ img{
 
 .small{
     text-align: center;
+    
 }
 
 .price{
@@ -52,5 +56,12 @@ img{
   float: right;
   cursor: pointer;
 }
+
+.about{
+  margin-top: 50px;
+  background-color: aliceblue;
+  color: black;
+}
+
 
 
