@@ -1,12 +1,12 @@
 import './App.css';
 import {useEffect, useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BiCart } from "react-icons/bi";
+import Header from './components/Header';
 import Home from './components/Home';
 import Cart from './components/Cart';
 import About from './components/About';
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import {Navbar, Container, Nav} from 'react-bootstrap';
+
 
 
 
@@ -15,7 +15,7 @@ function App() {
   const [products, setproducts] = useState([]);
   const [items, setItems] = useState([])
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products?limit=10', {
+    fetch('https://fakestoreapi.com/products?limit=50', {
       method: 'GET'
     }).then(response => response.json()).then(data => {
       setproducts(data)
@@ -37,11 +37,13 @@ function App() {
           x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
         )
       );
+      await fetch(`http://localhost:5000/items/${product.id}`, {
+        method: 'DELETE',
+      })
       count=exist.qty+1;
     } else {
       setItems([...items, { ...product, qty: 1 }]);
     }
-    console.log(product);
     await fetch('http://localhost:5000/items', {
       method: 'POST',
       headers: {
@@ -76,7 +78,7 @@ function App() {
           headers: {
             'Content-type': 'application/json',
           },
-          body: JSON.stringify(product),
+          body: JSON.stringify({ ...exist, qty: exist.qty - 1 }),
         })
     }
   };
@@ -94,16 +96,7 @@ function App() {
   }
   return (
      <BrowserRouter>
-      <Navbar className="bar" fixed="top" expand="lg" variant="light">
-        <Container>
-          <Navbar.Brand><BiCart/> NaN shopping</Navbar.Brand>
-          <Nav className="me-auto">
-        <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="/cart">Cart</Nav.Link>
-        <Nav.Link href="/about">About</Nav.Link>
-        </Nav>
-        </Container>
-      </Navbar>
+     <Header></Header>
         <Switch>
         <Route path="/" exact render={() => <Home products={products} addToCart={addToCart}/>}></Route>
           <Route path="/about" exact component={About}></Route>
