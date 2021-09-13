@@ -65,13 +65,13 @@ function App() {
     if (exist.qty === 1) {
       res.status === 200
         ? setItems(items.filter((x) => x.id !== product.id))
-        : alert('Error Deleting This Task')
+        : alert('Error Deleting This item')
     } else {
 
       res.status === 200
         ? setItems(
           items.map((x) => x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x) )
-        : alert('Error Deleting This Task')
+        : alert('Error Deleting This item')
 
         await fetch('http://localhost:5000/items', {
           method: 'POST',
