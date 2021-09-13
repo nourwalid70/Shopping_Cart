@@ -1,6 +1,6 @@
 import logo from './logo.jpeg';
+
 const About = () => {
-    console.log("here")
     return(
         
         <div className="about">

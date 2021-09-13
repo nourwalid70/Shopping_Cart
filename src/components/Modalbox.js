@@ -11,13 +11,12 @@ const Modalbox =(props) => {
   }
     return (
       <>
-          <Button variant="primary" onClick={openModal}>Checkout
+          <Button variant="primary" style={{ backgroundColor: "chocolate",float:"right"}} onClick={openModal}>Checkout
           </Button>
         <Modal show={isOpen} onHide={closeModal}>
           <Modal.Header closeButton>
             <Modal.Title>Checkout</Modal.Title>
           </Modal.Header>
-          <form>
           <Modal.Body>            
             <input className="info" type="text" placeholder="Your Full name" required/>
             <input className="info" type="text" placeholder="Your E-mail" required/>
@@ -32,7 +31,6 @@ const Modalbox =(props) => {
             </Button>
            
           </Modal.Footer>
-          </form>
         </Modal>
       </>
 

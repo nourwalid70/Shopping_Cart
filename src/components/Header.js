@@ -1,7 +1,7 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { BiCart } from "react-icons/bi";
+
 const Header = () => {
-    console.log("here")
     return (
         <Navbar className="bar" fixed="top" expand="lg" variant="light">
             <Container>

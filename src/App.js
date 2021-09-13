@@ -7,9 +7,6 @@ import Cart from './components/Cart';
 import About from './components/About';
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 
-
-
-
 function App() {
     
   const [products, setproducts] = useState([]);
