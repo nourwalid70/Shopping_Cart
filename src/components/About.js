@@ -5,7 +5,8 @@ const About = () => {
         
         <div className="about">
                 <img className="logo" src={logo} alt="logo" />
-         <p >  NaN shopping is a website providing products such as jackets, t-shirts, bags,accessories and more for affordable prices.
+         <p >  NaN shopping is a website providing products such as jackets, t-shirts, bags,accessories 
+               <br/>and more for affordable prices.
                <br/>The payment can be done with credit card or cash upon receiving.
             </p>
         </div>
