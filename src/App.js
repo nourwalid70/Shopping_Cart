@@ -11,6 +11,7 @@ function App() {
     
   const [products, setproducts] = useState([]);
   const [items, setItems] = useState([])
+
   useEffect(() => {
     fetch('https://fakestoreapi.com/products?limit=50', {
       method: 'GET'
@@ -21,7 +22,6 @@ function App() {
       const itemsFromServer = await fetchItems()
       setItems(itemsFromServer)
     }
-
     getItems()
   },[]);
 
@@ -48,13 +48,9 @@ function App() {
       },
       body: JSON.stringify({ ...product, qty:count}),
     })
-    console.log(items);
-
   };
 
   const removeFromCart = async (product) => {
-    console.log(product.id);
-    console.log(product);
     const res = await fetch(`http://localhost:5000/items/${product.id}`, {
       method: 'DELETE',
     })
@@ -88,12 +84,11 @@ function App() {
   const fetchItems = async () => {
     const res = await fetch('http://localhost:5000/items')
     const data = await res.json()
-
     return data
   }
   return (
      <BrowserRouter>
-     <Header></Header>
+        <Header></Header>
         <Switch>
         <Route path="/" exact render={() => <Home products={products} addToCart={addToCart}/>}></Route>
           <Route path="/about" exact component={About}></Route>

@@ -1,4 +1,5 @@
 import Product from "./Product";
+
 const Home = (props) => {
     const { products, addToCart} = props;
     return(
